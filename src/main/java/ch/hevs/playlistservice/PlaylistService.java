@@ -12,7 +12,7 @@ public interface PlaylistService {
 	List<User> getUsers();
 	
 	void addSongToPlaylist(Song song, Playlist playlist);
-	Playlist createPlaylist(String playlistName, List<Song> songs);
+	Playlist createPlaylist(int userId, String playlistName, List<Song> songs);
 	void deletePlaylist(Playlist playlist);
 	
 	List<Playlist> getPlaylistsByUser(User user);

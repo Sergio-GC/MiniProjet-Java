@@ -1,6 +1,7 @@
 package ch.hevs.businessobject;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ public class User {
 	
 	// relations
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_USER")
-	private List<Playlist> playlists;
+	private ArrayList<Playlist> playlists;
 	
 	// id
 	public long getId() {
@@ -43,10 +44,10 @@ public class User {
 
 	
 	// playlists (From Playlist)
-	public List<Playlist> getPlaylists() {
+	public ArrayList<Playlist> getPlaylists() {
 		return playlists;
 	}
-	public void setPlaylists(List<Playlist> playlists) {
+	public void setPlaylists(ArrayList<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 	

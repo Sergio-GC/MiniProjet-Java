@@ -13,7 +13,7 @@ import ch.hevs.businessobject.*;
 @Stateless
 public class PlaylistBean implements PlaylistService {
 	
-	@PersistenceContext(name = "PlaylistPU", type=PersistenceContextType.TRANSACTION);
+	@PersistenceContext(name = "PlaylistPU", type=PersistenceContextType.TRANSACTION)
 	private EntityManager em;
 
 	@Override

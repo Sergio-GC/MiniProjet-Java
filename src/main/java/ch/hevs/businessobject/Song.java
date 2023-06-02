@@ -78,6 +78,14 @@ public class Song {
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
+	
+	// singer
+	public Singer getSinger() {
+		return singer;
+	}
+	public void setSinger(Singer singer) {
+		this.singer = singer;
+	}
 
 	// constructors
 	public Song() {

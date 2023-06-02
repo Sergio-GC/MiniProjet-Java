@@ -2,6 +2,7 @@ package ch.hevs.businessobject;
 
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -65,6 +66,15 @@ public class Playlist {
 	}
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
+	}
+	
+	public void addSong(Song song) {
+		songs.add(song);
+	}
+	
+	// TODO change this because it's useless
+	public List<User> getUsers(){
+		return new ArrayList<User>();
 	}
 	
 	// constructors

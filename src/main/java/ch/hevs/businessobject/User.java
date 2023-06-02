@@ -24,7 +24,7 @@ public class User {
 	
 	// relations
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_USER")
-	private ArrayList<Playlist> playlists;
+	private List<Playlist> playlists;
 	
 	// id
 	public long getId() {
@@ -44,10 +44,10 @@ public class User {
 
 	
 	// playlists (From Playlist)
-	public ArrayList<Playlist> getPlaylists() {
+	public List<Playlist> getPlaylists() {
 		return playlists;
 	}
-	public void setPlaylists(ArrayList<Playlist> playlists) {
+	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 	

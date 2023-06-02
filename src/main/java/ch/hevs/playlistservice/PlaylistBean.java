@@ -1,6 +1,7 @@
 package ch.hevs.playlistservice;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -15,40 +16,88 @@ public class PlaylistBean implements PlaylistService {
 	
 	@PersistenceContext(name = "PlaylistPU", type=PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	public void populate() {
+		// JAI AUCUNE FOUTUE IDEE DE CE QUE JE DOIS FAIRE POUR CETTE MERDE DE BORDEL (?) --> SON OF A BITCH
+		Song nr = new Song("Norwegian Reggaeton", 69, new Album());
+		Song db = new Song("Drown me in Blood", 420, new Album());
+		Song bs = new Song("Bones", 36, new Album());
+		
+		em.persist(nr);
+		em.persist(db);
+		em.persist(bs);
+		
+		Album bst = new Album("Bullshit album", 1969);
+		List<Song> bullshitSongs = new ArrayList<Song>();
+		bullshitSongs.add(nr);
+		bullshitSongs.add(db);
+		bst.setSongs(bullshitSongs);
+		
+		em.persist(bst);
+		
+		nr.setAlbum(bst);
+		db.setAlbum(bst);
+		
+		Album dzn = new Album("DeezN", 1420);
+		bullshitSongs = new ArrayList<Song>();
+		bullshitSongs.add(bs);
+		dzn.setSongs(bullshitSongs);
+		
+		em.persist(dzn);		
+		bs.setAlbum(dzn);
+		
+		Singer singer1 = new Singer("Pre Malone");
+		em.persist(singer1);
+		
+		Singer singer2 = new Singer("During Malone (?)");
+		em.persist(singer2);
+		
+		User user1 = new User("Julienne");
+		em.persist(user1);
+		
+		User user2 = new User("Sergio");
+		em.persist(user2);
+		
+		Playlist fire = new Playlist("My playlist is, literally, fire :3", user1);
+		Playlist ice = new Playlist("My playlist is not so literally fire :(", user2);
+		
+		em.persist(ice);
+		em.persist(fire);
+	}
 
 	@Override
-	public List<Singer> getSingers() {
+	public ArrayList<Singer> getSingers() {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select * from Singers s");
-		return (List<Singer>) query.getResultList();
+		return (ArrayList<Singer>) query.getResultList();
 	}
 
 	@Override
-	public List<Album> getAlbums() {
+	public ArrayList<Album> getAlbums() {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select * from Albums a");
-		return (List<Album>) query.getResultList();
+		return (ArrayList<Album>) query.getResultList();
 	}
 
 	@Override
-	public List<Song> getSongs() {
+	public ArrayList<Song> getSongs() {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select * from Songs s");
-		return (List<Song>) query.getResultList();
+		return (ArrayList<Song>) query.getResultList();
 	}
 
 	@Override
-	public List<Playlist> getPlaylists() {
+	public ArrayList<Playlist> getPlaylists() {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select * from Playlists p");
-		return (List<Playlist>) query.getResultList();
+		return (ArrayList<Playlist>) query.getResultList();
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public ArrayList<User> getUsers() {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select * from Users u");
-		return (List<User>) query.getResultList();
+		return (ArrayList<User>) query.getResultList();
 	}
 
 	@Override
@@ -118,7 +167,7 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	@Override
-	public List<Playlist> getPlaylistsByUser(User user) {
+	public ArrayList<Playlist> getPlaylistsByUser(User user) {
 		// TODO Auto-generated method stub
 		return user.getPlaylists();
 	}

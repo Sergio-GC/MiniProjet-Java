@@ -2,6 +2,7 @@ package ch.hevs.playlistservice;
 
 import javax.ejb.Local;
 import java.util.List;
+import ch.hevs.businessobject.*;
 
 @Local
 public interface PlaylistService {

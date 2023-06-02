@@ -8,8 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 
+import ch.hevs.businessobject.*;
+
 @Stateless
-public class PlaylistTest implements PlaylistService {
+public class PlaylistBean implements PlaylistService {
 	
 	@PersistenceContext(name = "PlaylistPU", type=PersistenceContextType.TRANSACTION);
 	private EntityManager em;
@@ -65,9 +67,15 @@ public class PlaylistTest implements PlaylistService {
 		em.persist(user);
 		
 		List<Playlist> userPlaylists = user.getPlaylists();
-		Playlist playlist = new Playlist(playlistName, songs);
-		userPlaylists.add(playlist);
+		Playlist playlist = new Playlist(playlistName, user);
+		em.persist(playlist);
 		
+		// Add songs to the new playlist
+		for(Song song : songs) {
+			playlist.addSong(song);
+		}
+		
+		userPlaylists.add(playlist);
 		user.setPlaylists(userPlaylists);
 		return playlist;
 	}
@@ -75,10 +83,8 @@ public class PlaylistTest implements PlaylistService {
 	@Override
 	public void deletePlaylist(Playlist playlist) {
 		// TODO Auto-generated method stub
-		// Get the user
-		Query userQuery = em.createQuery("select * from Users u where u.id=:id");
-		userQuery.setParameter("id", userId);
-		User user = (User) userQuery.getSingleResult();
+		//Get the user
+		User user = playlist.getOwner();
 		
 		if(user == null) {
 			// TODO throw an exception
@@ -90,7 +96,7 @@ public class PlaylistTest implements PlaylistService {
 		
 		if(playlists.contains(playlist)) {
 			// Remove playlist from users with rights
-			List<int> users = playlist.getUsers();
+			List<Integer> users = playlist.getUsers();
 			for(int i : users) {
 				Query q = em.createQuery("from Users u where u.id=:id");
 				q.setParameter("id", i);
@@ -104,7 +110,7 @@ public class PlaylistTest implements PlaylistService {
 			}
 			
 			// Remove playlist from owner's list and update the list
-			playlists.delete(playlist);
+			playlists.remove(playlist);
 			user.setPlaylists(playlists);
 		} else {
 			//TODO throw an exception
@@ -120,18 +126,12 @@ public class PlaylistTest implements PlaylistService {
 	@Override
 	public void sharePlaylist(Playlist playlist, User newUser) {
 		// TODO Auto-generated method stub
-		int id = newUser.getId();
+		long id = newUser.getId();
 		em.persist(playlist);
-		List<int> usersWithRights = playlist.getUsers();
+		List<Long> usersWithRights = playlist.getUsers();
 		usersWithRights.add(id);
 		
 		
-	}
-
-	@Override
-	public Playlist createPlaylist(int userId, String playlistName, List<Song> songs) {
-		// TODO Auto-generated method stub
-		return new Playlist();
 	}
 
 }

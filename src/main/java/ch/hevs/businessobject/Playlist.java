@@ -33,7 +33,7 @@ public class Playlist {
 	
 	@ManyToMany
     @JoinTable(name="Song")
-	private Set<Song> songs;
+	private List<Song> songs;
 	
 	// id
 	public long getId() {
@@ -60,18 +60,19 @@ public class Playlist {
 	}
 	
 	// songs (From Song)
-	public Set<Song> getSongs() {
+	public List<Song> getSongs() {
 		return songs;
 	}
-	public void setSongs(Set<Song> songs) {
+	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
 	
 	// constructors
 	public Playlist() {
 	}
-	public Playlist(String name, User owner) {
+	public Playlist(String name, User owner, List<Song> songs) {
 		this.name = name;
 		this.owner = owner;
+		this.songs = songs;
 	}
 }

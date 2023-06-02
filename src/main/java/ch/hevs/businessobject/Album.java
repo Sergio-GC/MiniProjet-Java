@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +28,10 @@ public class Album {
 		// relations
 		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_ALBUM")
 		private List<Song> songs;
+
+		@ManyToOne
+		@JoinColumn(name = "FK_SINGER")
+		private Singer singer;
 		
 		// id
 		public long getId() {
@@ -59,11 +65,21 @@ public class Album {
 			this.songs = songs;
 		}
 		
+		// singer (From Singer)
+		public Singer getSinger() {
+			return singer;
+		}
+		public void setSinger(Singer singer) {
+			this.singer = singer;
+		}
+		
 		// constructors
 		public Album() {
 		}
-		public Album(String title, int year) {
+		public Album(String title, int year, Singer singer, List<Song> songs) {
 			this.title = title;
 			this.year = year;
+			this.singer = singer;
+			this.songs = songs;
 		}
 }

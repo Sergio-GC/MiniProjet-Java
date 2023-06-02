@@ -1,10 +1,14 @@
 package ch.hevs.businessobject;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +19,14 @@ public class Singer {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	@Column(name="name")
-	private String name;	
+	private String name;
+	
+	// relations
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_SINGER")
+	private List<Song> songs;
+	
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_SINGER")
+	private List<Album> albums;
 
 	// id
 	public long getId() {

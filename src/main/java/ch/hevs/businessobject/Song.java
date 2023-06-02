@@ -1,5 +1,6 @@
 package ch.hevs.businessobject;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -30,9 +31,13 @@ public class Song {
 	@JoinColumn(name = "FK_ALBUM")
 	private Album album;
 	
+	@ManyToOne
+	@JoinColumn(name = "FK_SINGER")
+	private Singer singer;
+	
     @ManyToMany
     @JoinTable(name="Playlist")
-    private Set<Playlist> playlists;
+    private List<Playlist> playlists;
 
 	// id
 	public long getId() {
@@ -67,10 +72,10 @@ public class Song {
 	}
 	
 	// playlists (From Playlist)
-    public Set<Playlist> getPlaylists() { 
+    public List<Playlist> getPlaylists() { 
     	return playlists; 
 	}
-	public void setPlaylists(Set<Playlist> playlists) {
+	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 

@@ -1,6 +1,9 @@
 package ch.hevs.playlistservice;
 
 import javax.ejb.Local;
+
+import ch.hevs.businessobject.*;
+
 import java.util.List;
 
 @Local

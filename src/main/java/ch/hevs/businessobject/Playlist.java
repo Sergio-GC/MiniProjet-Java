@@ -1,12 +1,19 @@
 package ch.hevs.businessobject;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +30,10 @@ public class Playlist {
 	@ManyToOne
 	@JoinColumn(name = "FK_USER")
 	private User owner;
+	
+	@ManyToMany
+    @JoinTable(name="Song")
+	private Set<Song> songs;
 	
 	// id
 	public long getId() {
@@ -46,6 +57,14 @@ public class Playlist {
 	}
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+	
+	// songs (From Song)
+	public Set<Song> getSongs() {
+		return songs;
+	}
+	public void setSongs(Set<Song> songs) {
+		this.songs = songs;
 	}
 	
 	// constructors

@@ -18,7 +18,7 @@ public class Singer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="name")
+	@Column(name="name", nullable = true)
 	private String name;
 	
 	// relations
@@ -26,6 +26,7 @@ public class Singer {
 	private List<Song> songs;
 	
 	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_SINGER")
+	@Column(nullable = true)
 	private List<Album> albums;
 
 	// id

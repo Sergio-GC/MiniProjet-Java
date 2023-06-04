@@ -19,11 +19,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="name")
+	@Column(name="name", nullable = true)
 	private String name;
 	
 	// relations
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_USER")
+	@Column(nullable = true)
 	private List<Playlist> playlists;
 	
 	// id

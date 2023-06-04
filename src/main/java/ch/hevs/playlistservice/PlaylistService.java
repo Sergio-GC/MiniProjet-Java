@@ -22,4 +22,6 @@ public interface PlaylistService {
 	
 	ArrayList<Playlist> getPlaylistsByUser(User user);
 	void sharePlaylist(Playlist playlist, User newUser);
+	
+	void populate();
 }

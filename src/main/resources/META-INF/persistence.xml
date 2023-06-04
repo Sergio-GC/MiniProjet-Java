@@ -5,7 +5,7 @@
                 http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 	version="1.0">
 
-	<persistence-unit name="bankPU">
+	<persistence-unit name="PlaylistPU">
 		<jta-data-source>java:/labsDS</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="update" />

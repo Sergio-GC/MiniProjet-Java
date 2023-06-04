@@ -20,13 +20,14 @@ public class Album {
 		@Id
 		@GeneratedValue(strategy = GenerationType.SEQUENCE)
 		private long id;
-		@Column(name="title")
+		@Column(name="title", nullable = true)
 		private String title;
-		@Column(name="year")
+		@Column(name="year", nullable = true)
 		private int year;
 		
 		// relations
 		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_ALBUM")
+		@Column(nullable = true)
 		private List<Song> songs;
 
 		@ManyToOne

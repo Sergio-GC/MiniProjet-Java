@@ -21,9 +21,9 @@ public class Song {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="title")
+	@Column(name="title", nullable = true)
 	private String title;
-	@Column(name="length")
+	@Column(name="length", nullable = true)
 	private int length;
 
 	// relations

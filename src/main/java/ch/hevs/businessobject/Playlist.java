@@ -24,7 +24,7 @@ public class Playlist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="name")
+	@Column(name="name", nullable = true)
 	private String name;
 
 	// relations

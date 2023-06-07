@@ -1,5 +1,6 @@
 package ch.hevs.businessobject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,10 +23,10 @@ public class Singer {
 	private String name;
 	
 	// relations
-	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_SINGER")
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.PERSIST)//@JoinColumn(name = "FK_SINGER")
 	private List<Song> songs;
 	
-	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_SINGER")
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.PERSIST)//@JoinColumn(name = "FK_SINGER")
 	@Column(nullable = true)
 	private List<Album> albums;
 
@@ -63,8 +64,21 @@ public class Singer {
 
 	// constructors
 	public Singer() {
+		songs = new ArrayList<>();
+		albums = new ArrayList<>();
 	}
 	public Singer(String name) {
 		this.name = name;
+		songs = new ArrayList<>();
+		albums = new ArrayList<>();
+	}
+
+	public void addSong(Song song){
+		songs.add(song);
+	}
+
+	public void addAlbum(Album album){
+		albums.add(album);
+		album.setSinger(this);
 	}
 }

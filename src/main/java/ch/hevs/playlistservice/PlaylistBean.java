@@ -1,7 +1,9 @@
 package ch.hevs.playlistservice;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -19,126 +21,28 @@ public class PlaylistBean implements PlaylistService {
 	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PlaylistPU");
 
 	public void populate() {
-		// Singer
-		Singer preMalone = new Singer("Pre Malone");
-		Singer duringMalone = new Singer("During Malone");
-//		em.persist(preMalone);
-//		em.persist(duringMalone);
+		User sergio = new User("Sergio");
 
-		// Songs
-		Song norwegianReggaeton = new Song("Norwegian Reggaeton", 69, new Album());
-		Song drownMeInBlood = new Song("Drown me in Blood", 420, new Album());
-		Song bones = new Song("Bones", 36, new Album());
-//		em.persist(norwegianReggaeton);
-//		em.persist(drownMeInBlood);
-//		em.persist(bones);
+		Singer a7x = new Singer("Avenged Sevenfold");
+		Album libad = new Album("Life Is But A Dream", 2023, a7x);
 
-		// Songs lists for albums
-		List<Song> bullshitSongs = new ArrayList<Song>();
-		List<Song> deeznSongs = new ArrayList<Song>();
-		bullshitSongs.add(norwegianReggaeton);
-		bullshitSongs.add(drownMeInBlood);
-		deeznSongs.add(bones);
+		Song gameOver = new Song("Game Over", 450);
+		gameOver.setSinger(a7x);
+		gameOver.setAlbum(libad);
 
-		// Albums
-		Album bullshitAlbum = new Album("Bullshit", 1969, preMalone, bullshitSongs);
-		Album deezn = new Album("Deez Nuts!", 1420, duringMalone, deeznSongs);
-//		em.persist(bullshitAlbum);
-//		em.persist(deezn);
+		Song cosmic = new Song("Cosmic", 742);
+		cosmic.setSinger(a7x);
+		cosmic.setAlbum(libad);
 
-		// Assign albums to the created songs
-		norwegianReggaeton.setAlbum(bullshitAlbum);
-		drownMeInBlood.setAlbum(bullshitAlbum);
-		bones.setAlbum(deezn);
-
-		// Assign singers to the created songs
-		norwegianReggaeton.setSinger(preMalone);
-		drownMeInBlood.setSinger(preMalone);
-		bones.setSinger(duringMalone);
-
-		// Assign the created songs to the given singer
-		preMalone.setSongs(bullshitSongs);
-		duringMalone.setSongs(deeznSongs);
-
-		// Assign albums to the singers
-		List<Album> preMaloneAlbums = new ArrayList<Album>();
-		preMaloneAlbums.add(bullshitAlbum);
-		List<Album> duringMaloneAlbums = new ArrayList<Album>();
-		duringMaloneAlbums.add(deezn);
-
-		preMalone.setAlbums(preMaloneAlbums);
-		duringMalone.setAlbums(duringMaloneAlbums);
+		List<Song> metalSongs = new ArrayList<>();
+		metalSongs.add(gameOver);
+		metalSongs.add(cosmic);
+		Playlist metal = new Playlist("Metal", sergio, metalSongs);
 
 
-		// Users
-		User julie = new User("Julienne");
-		User grosTas = new User("Sergio");
-//		em.persist(julie);
-//		em.persist(grosTas);
+		em.persist(libad);
+		em.persist(metal);
 
-		// Playlists
-		List<Song> fireSongs = new ArrayList<Song>();
-		fireSongs.add(norwegianReggaeton);
-		fireSongs.add(bones);
-		Playlist fire = new Playlist("Fire", julie, fireSongs);
-//		em.persist(fire);
-
-		List<Song> iceSongs = new ArrayList<Song>();
-		iceSongs.add(drownMeInBlood);
-		iceSongs.add(norwegianReggaeton);
-		Playlist ice = new Playlist("Ice Age (?)", grosTas, iceSongs);
-//		em.persist(ice);
-
-		List<Song> shittySongs = new ArrayList<Song>();
-		shittySongs.add(norwegianReggaeton);
-		shittySongs.add(drownMeInBlood);
-		shittySongs.add(bones);
-		Playlist shit = new Playlist("Shit", grosTas, shittySongs);
-//		em.persist(shit);
-
-		List<Playlist> norwegianPlaylists = new ArrayList<Playlist>();
-		norwegianPlaylists.add(fire);
-		norwegianPlaylists.add(ice);
-		norwegianPlaylists.add(shit);
-		norwegianReggaeton.setPlaylists(norwegianPlaylists);
-
-		List<Playlist> bonesPlaylists = new ArrayList<Playlist>();
-		bonesPlaylists.add(fire);
-		bonesPlaylists.add(shit);
-		bones.setPlaylists(bonesPlaylists);
-
-		List<Playlist> drownMeInBloodPlaylists = new ArrayList<Playlist>();
-		drownMeInBloodPlaylists.add(ice);
-		drownMeInBloodPlaylists.add(shit);
-		drownMeInBlood.setPlaylists(drownMeInBloodPlaylists);
-
-		List<Playlist> juliePlaylists = new ArrayList<Playlist>();
-		juliePlaylists.add(fire);
-		julie.setPlaylists(juliePlaylists);
-
-		List<Playlist> grosTasPlaylists = new ArrayList<Playlist>();
-		grosTasPlaylists.add(ice);
-		grosTasPlaylists.add(ice);
-		grosTas.setPlaylists(grosTasPlaylists);
-
-
-		// Persist every entity
-		em.persist(julie);
-		em.persist(grosTas);
-
-		em.persist(norwegianReggaeton);
-		em.persist(drownMeInBlood);
-		em.persist(bones);
-
-		em.persist(preMalone);
-		em.persist(duringMalone);
-
-		em.persist(fire);
-		em.persist(ice);
-		em.persist(shit);
-
-		em.persist(bullshitAlbum);
-		em.persist(deezn);
 	}
 
 	@Override
@@ -191,18 +95,18 @@ public class PlaylistBean implements PlaylistService {
 		User user = (User) userQuery.getSingleResult();
 		em.persist(user);
 
-		List<Playlist> userPlaylists = user.getPlaylists();
-		Playlist playlist = new Playlist(playlistName, user, songs); // TODO finish
-		em.persist(playlist);
+//		List<Playlist> userPlaylists = user.getPlaylists();
+//		Playlist playlist = new Playlist(playlistName, user, songs); // TODO finish
+//		em.persist(playlist);
 
 		// Add songs to the new playlist
-		for(Song song : songs) {
-			playlist.addSong(song);
-		}
-
-		userPlaylists.add(playlist);
-		user.setPlaylists(userPlaylists);
-		return playlist;
+//		for(Song song : songs) {
+//			playlist.addSong(song);
+//		}
+//
+//		userPlaylists.add(playlist);
+//		user.setPlaylists(userPlaylists);
+		return new Playlist();
 	}
 
 	@Override
@@ -217,35 +121,36 @@ public class PlaylistBean implements PlaylistService {
 		em.persist(user);
 
 		// Get the user's playlists
-		List<Playlist> playlists = user.getPlaylists();
-
-		if(playlists.contains(playlist)) {
-			// Remove playlist from users with rights
-			List<User> users = playlist.getUsers();
-			for(User u : users) {
-				Query q = em.createQuery("select u from User u where u.id=:id");
-				q.setParameter("id", u.getId());
-				User usr = (User) q.getSingleResult();
-				em.persist(usr);
-
-				// Remove and update list of playlists
-				List<Playlist> ps = u.getPlaylists();
-				ps.remove(playlist);
-				u.setPlaylists(ps);
-			}
-
-			// Remove playlist from owner's list and update the list
-			playlists.remove(playlist);
-			user.setPlaylists(playlists);
-		} else {
-			//TODO throw an exception
-		}
+//		List<Playlist> playlists = user.getPlaylists();
+//
+//		if(playlists.contains(playlist)) {
+//			// Remove playlist from users with rights
+//			List<User> users = playlist.getUsers();
+//			for(User u : users) {
+//				Query q = em.createQuery("select u from User u where u.id=:id");
+//				q.setParameter("id", u.getId());
+//				User usr = (User) q.getSingleResult();
+//				em.persist(usr);
+//
+//				// Remove and update list of playlists
+//				List<Playlist> ps = u.getPlaylists();
+//				ps.remove(playlist);
+//				u.setPlaylists(ps);
+//			}
+//
+//			// Remove playlist from owner's list and update the list
+//			playlists.remove(playlist);
+//			user.setPlaylists(playlists);
+//		} else {
+//			//TODO throw an exception
+//		}
 	}
 
 	@Override
 	public ArrayList<Playlist> getPlaylistsByUser(User user) {
 		// TODO Auto-generated method stub
-		return (ArrayList<Playlist>) user.getPlaylists();
+//		return (ArrayList<Playlist>) user.getPlaylists();
+		return new ArrayList<Playlist>();
 	}
 
 	@Override

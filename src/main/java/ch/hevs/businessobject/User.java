@@ -19,12 +19,12 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="name", nullable = true)
+	@Column(name="name")
 	private String name;
 	
 	// relations
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_USER")
-	@Column(nullable = true)
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+	@Column(name = "playlists")
 	private List<Playlist> playlists;
 	
 	// id
@@ -54,8 +54,15 @@ public class User {
 	
 	// constructors
 	public User() {
+		playlists = new ArrayList<Playlist>();
 	}
 	public User(String name) {
 		this.name = name;
+		this.playlists = new ArrayList<Playlist>();
+	}
+
+	public void addPlaylist(Playlist playlist){
+		playlists.add(playlist);
+		playlist.setOwner(this);
 	}
 }

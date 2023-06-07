@@ -1,18 +1,10 @@
 package ch.hevs.businessobject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Song")
@@ -27,16 +19,15 @@ public class Song {
 	private int length;
 
 	// relations
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FK_ALBUM")
 	private Album album;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "FK_SINGER")
 	private Singer singer;
 	
-    @ManyToMany
-    @JoinTable(name="Playlist")
+    @ManyToMany(mappedBy = "songs", cascade = CascadeType.ALL)
     private List<Playlist> playlists;
 
 	// id
@@ -69,6 +60,10 @@ public class Song {
 	}
 	public void setAlbum(Album album) {
 		this.album = album;
+
+		List<Song> albumSongs = album.getSongs();
+		albumSongs.add(this);
+		album.setSongs(albumSongs);
 	}
 	
 	// playlists (From Playlist)
@@ -85,14 +80,18 @@ public class Song {
 	}
 	public void setSinger(Singer singer) {
 		this.singer = singer;
+		singer.addSong(this);
 	}
 
 	// constructors
 	public Song() {
+		album = new Album();
+		playlists = new ArrayList<>();
 	}
-	public Song(String title, int length, Album album) {
+	public Song(String title, int length) {
 		this.title = title;
 		this.length = length;
-		this.album = album;
+		this.album = new Album();
+		playlists = new ArrayList<>();
 	}
 }

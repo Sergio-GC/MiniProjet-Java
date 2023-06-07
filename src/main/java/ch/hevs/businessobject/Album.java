@@ -1,5 +1,6 @@
 package ch.hevs.businessobject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,17 +21,16 @@ public class Album {
 		@Id
 		@GeneratedValue(strategy = GenerationType.SEQUENCE)
 		private long id;
-		@Column(name="title", nullable = true)
+		@Column(name="title")
 		private String title;
-		@Column(name="year", nullable = true)
+		@Column(name="year")
 		private int year;
 		
 		// relations
-		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL)//@JoinColumn(name = "FK_ALBUM")
-		@Column(nullable = true)
+		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
 		private List<Song> songs;
 
-		@ManyToOne
+		@ManyToOne(cascade = CascadeType.ALL)
 		@JoinColumn(name = "FK_SINGER")
 		private Singer singer;
 		
@@ -76,11 +76,12 @@ public class Album {
 		
 		// constructors
 		public Album() {
+			songs = new ArrayList<>();
 		}
-		public Album(String title, int year, Singer singer, List<Song> songs) {
+		public Album(String title, int year, Singer singer) {
 			this.title = title;
 			this.year = year;
 			this.singer = singer;
-			this.songs = songs;
+			this.songs = new ArrayList<>();
 		}
 }

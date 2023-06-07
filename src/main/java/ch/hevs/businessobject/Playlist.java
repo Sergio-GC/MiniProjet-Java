@@ -1,5 +1,6 @@
 package ch.hevs.businessobject;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
@@ -24,16 +25,16 @@ public class Playlist {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(name="name", nullable = true)
+	@Column(name="name")
 	private String name;
 
 	// relations
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_USER")
 	private User owner;
 	
-	@ManyToMany
-    @JoinTable(name="Song")
+	@ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name="Song")
 	private List<Song> songs;
 	
 	// id
@@ -69,7 +70,11 @@ public class Playlist {
 	}
 	
 	public void addSong(Song song) {
+		if (this.songs == null){
+			songs = new ArrayList<>();
+		}
 		songs.add(song);
+		song.getPlaylists().add(this);
 	}
 	
 	// TODO change this because it's useless

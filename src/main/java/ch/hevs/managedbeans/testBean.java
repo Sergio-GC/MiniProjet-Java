@@ -1,19 +1,20 @@
 package ch.hevs.managedbeans;
 
-import java.util.List;
-import java.util.ArrayList;
+import ch.hevs.businessobject.Playlist;
+import ch.hevs.businessobject.Song;
+import ch.hevs.playlistservice.PlaylistService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.ValueChangeEvent;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import ch.hevs.playlistservice.PlaylistService;
-import ch.hevs.businessobject.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class testBean {
 	private String chosenPlaylist;
 	private List<String> playlistNames;
+	private List<String> playlistSongs;
 	private PlaylistService ps;
 	
 	@PostConstruct
@@ -32,6 +33,23 @@ public class testBean {
 		}
 	}
 
+	public String showDetails(){
+		try{
+			Playlist p = ps.getPlaylistByName(chosenPlaylist);
+
+			List<Song> songs = p.getSongs();
+			playlistSongs = new ArrayList<>();
+
+			for(Song s : songs){
+				playlistSongs.add(s.getTitle() + " - " + s.getSinger().getName());
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return "playlistDetails";
+	}
+
 	// Chosen Playlist
 	public String getChosenPlaylist(){
 		return chosenPlaylist;
@@ -43,6 +61,11 @@ public class testBean {
 	// PlaylistNames
 	public List<String> getPlaylistNames(){
 		return playlistNames;
+	}
+
+	// Songs
+	public List<String> getPlaylistSongs(){
+		return playlistSongs;
 	}
 	
 	public void updateChosenPlaylist(ValueChangeEvent event) {

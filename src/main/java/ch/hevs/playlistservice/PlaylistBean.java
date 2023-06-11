@@ -1,16 +1,11 @@
 package ch.hevs.playlistservice;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
+import ch.hevs.businessobject.*;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
-
-import ch.hevs.businessobject.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Stateless
 public class PlaylistBean implements PlaylistService {
@@ -160,6 +155,14 @@ public class PlaylistBean implements PlaylistService {
 		em.persist(playlist);
 		List<User> usersWithRights = playlist.getUsers();
 		usersWithRights.add(newUser);
+	}
+
+	public Playlist getPlaylistByName(String playlistName){
+		Query q = em.createQuery("select p from Playlist p join fetch p.songs where p.name=:name");
+		q.setParameter("name", playlistName);
+
+		// Return the first playlist with the given name TODO make sure every playlist has a unique name
+		return (Playlist) q.getResultList().get(0);
 	}
 
 }

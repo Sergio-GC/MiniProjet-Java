@@ -16,6 +16,8 @@
 	        	<h:selectOneMenu value="#{testBean.chosenPlaylist}" valueChangeListener="#{testBean.updateChosenPlaylist}" onchange="submit()">
 	        		<f:selectItems value="#{testBean.playlistNames}"/>
 	        	</h:selectOneMenu>
+				<!-- Button to redirect to the playlistDetails page where we'll show the songs of the chosen playlist -->
+				<h:commandButton value="Show playlist's songs" action="#{testBean.showDetails}"></h:commandButton>
         	</h:panelGrid>
         </h:form>
     </ui:define>

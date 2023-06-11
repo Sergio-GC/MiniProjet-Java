@@ -9,5 +9,13 @@
 		<managed-bean-class>ch.hevs.managedbeans.testBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<navigation-rule>
+		<display-name>welcomeTest.xhtml</display-name>
+		<from-view-id>/welcomeTest.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>playlistDetails</from-outcome>
+			<to-view-id>/playlistDetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

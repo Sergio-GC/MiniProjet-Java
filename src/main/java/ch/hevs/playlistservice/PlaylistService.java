@@ -1,12 +1,10 @@
 package ch.hevs.playlistservice;
 
+import ch.hevs.businessobject.*;
+
 import javax.ejb.Local;
-
-import ch.hevs.businessobject.*;
-
-import java.util.List;
 import java.util.ArrayList;
-import ch.hevs.businessobject.*;
+import java.util.List;
 
 @Local
 public interface PlaylistService {
@@ -24,4 +22,6 @@ public interface PlaylistService {
 	void sharePlaylist(Playlist playlist, User newUser);
 	
 	void populate();
+
+	Playlist getPlaylistByName(String playlistName);
 }

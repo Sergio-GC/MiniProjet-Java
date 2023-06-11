@@ -13,11 +13,11 @@
             <br></br>
             <h:panelGrid columns="5">
                 <h:outputText value="#{testBean.chosenPlaylist} playlist's songs:"/>
-                <h:ul>
-                    <ui:repeat value="#{testBean.playlistSongs}" value="song">
+                <ul>
+                    <ui:repeat value="#{testBean.playlistSongs}" var="song">
                         <li>#{song}</li>
                     </ui:repeat>
-                </h:ul>
+                </ul>
             </h:panelGrid>
         </h:form>
     </ui:define>

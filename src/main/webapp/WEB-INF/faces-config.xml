@@ -9,13 +9,26 @@
 		<managed-bean-class>ch.hevs.managedbeans.testBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+
+	<navigation-rule>
+		<display-name>userSelection.xhtml</display-name>
+		<from-view-id>/userSelection.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>selectUser</from-outcome>
+			<to-view-id>/welcomeTest.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<navigation-rule>
 		<display-name>welcomeTest.xhtml</display-name>
 		<from-view-id>/welcomeTest.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>playlistDetails</from-outcome>
+			<from-outcome>showDetails</from-outcome>
 			<to-view-id>/playlistDetails.xhtml</to-view-id>
 		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<display-name>welcomeTest.xhtml</display-name>
+		<from-view-id>/welcomeTest.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>addSongs</from-outcome>
 			<to-view-id>/addSongs.xhtml</to-view-id>

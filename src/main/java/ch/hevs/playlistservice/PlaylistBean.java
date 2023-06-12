@@ -169,9 +169,12 @@ public class PlaylistBean implements PlaylistService {
 
 	@Override
 	public ArrayList<Playlist> getPlaylistsByUser(User user) {
-		// TODO Auto-generated method stub
-//		return (ArrayList<Playlist>) user.getPlaylists();
-		return new ArrayList<Playlist>();
+		em.merge(user);
+
+		Query query = em.createQuery("SELECT p FROM Playlist p WHERE p.owner=:owner");
+		query.setParameter("owner", user);
+
+		return (ArrayList<Playlist>) query.getResultList();
 	}
 
 	@Override

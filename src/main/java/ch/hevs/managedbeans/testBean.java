@@ -2,6 +2,7 @@ package ch.hevs.managedbeans;
 
 import ch.hevs.businessobject.Playlist;
 import ch.hevs.businessobject.Song;
+import ch.hevs.businessobject.User;
 import ch.hevs.playlistservice.PlaylistService;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +18,8 @@ public class testBean {
 	private List<String> playlistSongs;
 	private List<Song> fullSongs;
 	private PlaylistService ps;
+	private List<User> users;
+	private User chosenUser;
 
 	@PostConstruct
 	public void initialize() throws NamingException{
@@ -26,12 +29,15 @@ public class testBean {
 		ps = (PlaylistService) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/PlaylistBean!ch.hevs.playlistservice.PlaylistService");
 		//ps.populate();
 
-		// Get playlists
+		/*// Get playlists
 		List<Playlist> playlists = ps.getPlaylists();
 		playlistNames = new ArrayList<String>();
 		for(Playlist p : playlists) {
 			playlistNames.add(p.getName());
-		}
+		}*/
+
+		// Get users
+		users = ps.getUsers();
 	}
 
 	public String showDetails(){
@@ -80,6 +86,26 @@ public class testBean {
 			Playlist p = ps.getPlaylistByName(chosenPlaylist);
 			ps.addSongToPlaylist(song, p);
 		}
+	}
+
+	public String selectUser(User user){
+		// Save the user's selection
+		chosenUser = user;
+
+		// Set the playlist to the user's playlists
+		List<Playlist> playlists = ps.getPlaylistsByUser(chosenUser);
+
+		// Set the names in the list of playlists
+		playlistNames = new ArrayList<>();
+		for(Playlist p : playlists)
+			playlistNames.add(p.getName());
+
+		return "welcomeTest";
+	}
+
+	// Users
+	public List<User> getUsers(){
+		return users;
 	}
 
 	// Songs

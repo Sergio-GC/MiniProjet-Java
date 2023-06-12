@@ -10,11 +10,10 @@
     <ui:define name="content">
         <h:form>
             <h1>Welcome to the future Spotify ;)</h1>
-            <br></br>
-            <h:panelGrid columns="10">
-                <h3>Please, select a user</h3>
+            <h:panelGrid columns="5">
+                <h3>Please, select a user</h3><br></br><br></br>
                 <ui:repeat value="#{testBean.users}" var="user">
-                    <h:outputTest value="#{user.getName()}" action="#{testBean.selectUser}"/><br/>
+                    <h:commandButton value="#{user.getName()}" action="#{testBean.selectUser(user)}"/><br/>
                 </ui:repeat>
             </h:panelGrid>
         </h:form>

@@ -1,10 +1,8 @@
 package ch.hevs.businessobject;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name="Song")
@@ -19,15 +17,15 @@ public class Song {
 	private int length;
 
 	// relations
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_ALBUM")
 	private Album album;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "FK_SINGER")
 	private Singer singer;
 	
-    @ManyToMany(mappedBy = "songs", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "songs", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Playlist> playlists;
 
 	// id
@@ -93,5 +91,11 @@ public class Song {
 		this.length = length;
 		this.album = new Album();
 		playlists = new ArrayList<>();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Song s = (Song) obj;
+		return this.id == s.getId();
 	}
 }

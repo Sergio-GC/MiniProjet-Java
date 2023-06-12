@@ -1,18 +1,8 @@
 package ch.hevs.businessobject;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="Album")
@@ -27,7 +17,7 @@ public class Album {
 		private int year;
 		
 		// relations
-		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+		@OneToMany(mappedBy = "album", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 		private List<Song> songs;
 
 		@ManyToOne(cascade = CascadeType.ALL)

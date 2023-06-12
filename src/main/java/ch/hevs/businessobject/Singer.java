@@ -1,16 +1,8 @@
 package ch.hevs.businessobject;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 @Entity
 @Table(name="Singer")
@@ -23,10 +15,10 @@ public class Singer {
 	private String name;
 	
 	// relations
-	@OneToMany(mappedBy = "singer", cascade = CascadeType.PERSIST)//@JoinColumn(name = "FK_SINGER")
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//@JoinColumn(name = "FK_SINGER")
 	private List<Song> songs;
 	
-	@OneToMany(mappedBy = "singer", cascade = CascadeType.PERSIST)//@JoinColumn(name = "FK_SINGER")
+	@OneToMany(mappedBy = "singer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//@JoinColumn(name = "FK_SINGER")
 	@Column(nullable = true)
 	private List<Album> albums;
 

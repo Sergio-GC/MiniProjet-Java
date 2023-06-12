@@ -29,13 +29,37 @@ public class PlaylistBean implements PlaylistService {
 		cosmic.setSinger(a7x);
 		cosmic.setAlbum(libad);
 
+		Album nightmareAlbum = new Album("Nightmare", 2010, a7x);
+
+		Song nightmare = new Song("Nightmare", 355);
+		nightmare.setSinger(a7x);
+		nightmare.setAlbum(nightmareAlbum);
+
+		Song afterlife = new Song("Afterlife", 402);
+		afterlife.setSinger(a7x);
+		afterlife.setAlbum(nightmareAlbum);
+
 		List<Song> metalSongs = new ArrayList<>();
 		metalSongs.add(gameOver);
 		metalSongs.add(cosmic);
 		Playlist metal = new Playlist("Metal", sergio, metalSongs);
 
 
+		Singer fleshgodApocalypse = new Singer("Fleshgod Apocalypse");
+		Album blueAlbum = new Album("Blue", 2006, fleshgodApocalypse);
+
+		Song blue = new Song("Blue", 168);
+		blue.setAlbum(blueAlbum);
+		blue.setSinger(fleshgodApocalypse);
+
+		Song no = new Song("No", 420);
+		no.setAlbum(blueAlbum);
+		no.setSinger(fleshgodApocalypse);
+
+
 		em.persist(libad);
+		em.persist(nightmareAlbum);
+		em.persist(blueAlbum);
 		em.persist(metal);
 
 	}
@@ -77,7 +101,9 @@ public class PlaylistBean implements PlaylistService {
 
 	@Override
 	public void addSongToPlaylist(Song song, Playlist playlist) {
-		// TODO Auto-generated method stub
+		playlist = em.merge(playlist);
+		song = em.merge(song);
+
 		em.persist(playlist);
 		playlist.addSong(song);
 	}

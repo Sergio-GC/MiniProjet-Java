@@ -17,15 +17,15 @@ public class testBean {
 	private List<String> playlistSongs;
 	private List<Song> fullSongs;
 	private PlaylistService ps;
-	
+
 	@PostConstruct
 	public void initialize() throws NamingException{
-		
+
 		// Use JNDI to inject reference to playlist bean
 		InitialContext ctx = new InitialContext();
 		ps = (PlaylistService) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/PlaylistBean!ch.hevs.playlistservice.PlaylistService");
 		//ps.populate();
-		
+
 		// Get playlists
 		List<Playlist> playlists = ps.getPlaylists();
 		playlistNames = new ArrayList<String>();
@@ -54,13 +54,20 @@ public class testBean {
 	public String addSongs(){
 		try{
 			fullSongs = ps.getSongs();
+			List<Integer> songsIndexes = new ArrayList<>();
 
 			List<Song> playlistSongs = ps.getPlaylistByName(chosenPlaylist).getSongs();
 			for(int i = 0; i < fullSongs.size(); i++){
 				for(int j = 0; j < playlistSongs.size(); j++){
-					if (fullSongs.get(i).equals(playlistSongs.get(j)))
-						fullSongs.remove(i);
+					if (fullSongs.get(i).equals(playlistSongs.get(j))) {
+						songsIndexes.add(i);
+						break;
+					}
 				}
+			}
+
+			for(int i = 0; i < songsIndexes.size(); i++){
+				fullSongs.remove(songsIndexes.get(i) -i);
 			}
 		}catch (Exception e){
 			e.printStackTrace();
@@ -84,10 +91,11 @@ public class testBean {
 	public String getChosenPlaylist(){
 		return chosenPlaylist;
 	}
+
 	public void setChosenPlaylist(final String chosenPlaylist){
 		this.chosenPlaylist = chosenPlaylist;
 	}
-	
+
 	// PlaylistNames
 	public List<String> getPlaylistNames(){
 		return playlistNames;
@@ -97,9 +105,9 @@ public class testBean {
 	public List<String> getPlaylistSongs(){
 		return playlistSongs;
 	}
-	
+
 	public void updateChosenPlaylist(ValueChangeEvent event) {
 		this.chosenPlaylist = (String) event.getNewValue();
 	}
-	
+
 }

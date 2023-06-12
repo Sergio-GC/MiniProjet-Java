@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
+    <ui:define name="content">
+        <h:form>
+            <h:outputLabel value="Available songs:"/>
+            <br></br>
+            <h:panelGrid columns="15">
+                <h:outputText value="Add music to #{testBean.chosenPlaylist} playlist."/>
+                <ul>
+                    <ui:repeat value="#{testBean.fullSongs}" var="song">
+                        <li>#{song.getTitle()}</li><h:commandButton value="Add" action="#{testBean.addSongToPlaylist(song)}"/>
+                    </ui:repeat>
+                </ul>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

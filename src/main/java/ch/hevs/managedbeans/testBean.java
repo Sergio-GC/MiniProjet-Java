@@ -15,6 +15,7 @@ public class testBean {
 	private String chosenPlaylist;
 	private List<String> playlistNames;
 	private List<String> playlistSongs;
+	private List<Song> fullSongs;
 	private PlaylistService ps;
 	
 	@PostConstruct
@@ -23,7 +24,7 @@ public class testBean {
 		// Use JNDI to inject reference to playlist bean
 		InitialContext ctx = new InitialContext();
 		ps = (PlaylistService) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/PlaylistBean!ch.hevs.playlistservice.PlaylistService");
-		ps.populate();
+		//ps.populate();
 		
 		// Get playlists
 		List<Playlist> playlists = ps.getPlaylists();
@@ -48,6 +49,35 @@ public class testBean {
 		}
 
 		return "playlistDetails";
+	}
+
+	public String addSongs(){
+		try{
+			fullSongs = ps.getSongs();
+
+			List<Song> playlistSongs = ps.getPlaylistByName(chosenPlaylist).getSongs();
+			for(int i = 0; i < fullSongs.size(); i++){
+				for(int j = 0; j < playlistSongs.size(); j++){
+					if (fullSongs.get(i).equals(playlistSongs.get(j)))
+						fullSongs.remove(i);
+				}
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return "addSongs";
+	}
+
+	public void addSongToPlaylist(Song song){
+		if(chosenPlaylist != null){
+			Playlist p = ps.getPlaylistByName(chosenPlaylist);
+			ps.addSongToPlaylist(song, p);
+		}
+	}
+
+	// Songs
+	public List<Song> getFullSongs(){
+		return fullSongs;
 	}
 
 	// Chosen Playlist

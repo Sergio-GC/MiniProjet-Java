@@ -20,6 +20,7 @@ public interface PlaylistService {
 	
 	ArrayList<Playlist> getPlaylistsByUser(User user);
 	void sharePlaylist(Playlist playlist, User newUser);
+	User addUser(String username);
 	
 	void populate();
 

@@ -167,6 +167,13 @@ public class PlaylistBean implements PlaylistService {
 //		}
 	}
 
+	public User addUser(String username){
+		User newUser = new User(username);
+		em.persist(newUser);
+
+		return newUser;
+	}
+
 	@Override
 	public ArrayList<Playlist> getPlaylistsByUser(User user) {
 		em.merge(user);

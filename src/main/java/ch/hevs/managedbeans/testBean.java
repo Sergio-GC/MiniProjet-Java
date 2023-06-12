@@ -20,6 +20,7 @@ public class testBean {
 	private PlaylistService ps;
 	private List<User> users;
 	private User chosenUser;
+	private String newUserName;
 
 	@PostConstruct
 	public void initialize() throws NamingException{
@@ -37,7 +38,9 @@ public class testBean {
 		}*/
 
 		// Get users
-		users = ps.getUsers();
+		users = loadUsers();
+
+		newUserName = "John Doe";
 	}
 
 	public String showDetails(){
@@ -103,9 +106,28 @@ public class testBean {
 		return "welcomeTest";
 	}
 
+	public List<User> loadUsers(){
+		return ps.getUsers();
+	}
+
+	public String addUser(){
+		// Create user and log them in immediately
+		return selectUser(ps.addUser(newUserName));
+	}
+
+	public String createUser(){
+		return "createUser";
+	}
+
 	// Users
 	public List<User> getUsers(){
 		return users;
+	}
+	public String getNewUserName(){
+		return newUserName;
+	}
+	public void setNewUserName(String newUserName){
+		this.newUserName = newUserName;
 	}
 
 	// Songs

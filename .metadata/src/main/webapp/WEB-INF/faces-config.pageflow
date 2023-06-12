@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/TP12-WEB-EJB-PC-EPC-E-solution/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14141592409490" configfile="/TP12-WEB-EJB-PC-EPC-E-donnee/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="userSelection.xhtml" x="122" y="178" id="pf16865954834060" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf16865954834061 pf16865979117679" path="/userSelection.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="welcomeTest.xhtml" x="338" y="178" id="pf16865954834062" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf16865956499227 pf16865956499228" inlinks="pf16865954834061" path="/welcomeTest.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="playlistDetails.xhtml" x="516" y="132" id="pf16865954834065" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf16865956499227" path="/playlistDetails.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="addSongs.xhtml" x="534" y="242" id="pf16865954834066" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf16865956499228" path="/addSongs.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="createUser.xhtml" x="360" y="312" width="73" height="73" id="pf168659791176710" inlinks="pf16865979117679" path="/createUser.xhtml"/>
+  <links id="pf16865954834061" target="pf16865954834062" source="pf16865954834060" outcome="selectUser"/>
+  <links id="pf16865956499227" target="pf16865954834065" source="pf16865954834062" outcome="showDetails"/>
+  <links id="pf16865956499228" target="pf16865954834066" source="pf16865954834062" outcome="addSongs"/>
+  <links id="pf16865979117679" target="pf168659791176710" source="pf16865954834060" outcome="createUser"/>
+</pageflow:Pageflow>

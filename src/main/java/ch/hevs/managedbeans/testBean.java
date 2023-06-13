@@ -1,5 +1,6 @@
 package ch.hevs.managedbeans;
 
+import ch.hevs.businessobject.Album;
 import ch.hevs.businessobject.Playlist;
 import ch.hevs.businessobject.Song;
 import ch.hevs.businessobject.User;
@@ -22,6 +23,7 @@ public class testBean {
 	private User chosenUser;
 	private String newUserName;
 	private Song song;
+	private Album album;
 
 	@PostConstruct
 	public void initialize() throws NamingException{
@@ -106,6 +108,11 @@ public class testBean {
 		return "songDetails";
 	}
 
+	public String albumDetails(Album album){
+		this.album = album;
+		return "albumDetails";
+	}
+
 	public List<User> loadUsers(){
 		return ps.getUsers();
 	}
@@ -126,6 +133,7 @@ public class testBean {
 	public Song getSong(){
 		return song;
 	}
+	public Album getAlbum(){return album;}
 
 	// Users
 	public List<User> getUsers(){

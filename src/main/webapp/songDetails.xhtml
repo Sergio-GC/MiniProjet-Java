@@ -14,7 +14,7 @@
             <h:panelGrid columns="2">
                 <h:outputText value="Title:  "/><h:outputText value="     #{song.title}"/>
                 <h:outputText value="Duration (in seconds):  "/><h:outputText value="     #{song.length}"/>
-                <h:outputText value="Album:  "/><h:outputText value="     #{song.album.title}"/>
+                <h:outputText value="Album:  "/><h:commandLink value="     #{song.album.title}" action="#{testBean.albumDetails(testBean.song.getAlbum())}"/>
                 <h:outputText value="Artist:  "/><h:outputText value="     #{song.singer.name}"/>
             </h:panelGrid>
         </h:form>

@@ -24,6 +24,8 @@ public interface PlaylistService {
 	void sharePlaylist(Playlist playlist, User newUser);
 	User addUser(String username);
 	Playlist addPlaylist(String playlistName, User user);
+
+	void addNewSong(Singer singer, Album album, Song song);
 	
 	void populate();
 

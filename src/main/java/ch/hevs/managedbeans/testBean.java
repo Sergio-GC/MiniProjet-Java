@@ -1,15 +1,18 @@
 package ch.hevs.managedbeans;
 
-import ch.hevs.businessobject.Playlist;
-import ch.hevs.businessobject.Song;
-import ch.hevs.businessobject.User;
+import ch.hevs.businessobject.*;
 import ch.hevs.playlistservice.PlaylistService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.validator.ValidatorException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class testBean {
@@ -23,6 +26,11 @@ public class testBean {
 	private User chosenUser;
 	private String newUserName;
 	private String newPlaylistName;
+	private String newSongTitle;
+	private String newSongLength;
+	private String newSingerName;
+	private String newAlbumTitle;
+	private String newAlbumYear;
 
 	@PostConstruct
 	public void initialize() throws NamingException{
@@ -44,6 +52,12 @@ public class testBean {
 
 		newUserName = "John Doe";
 		newPlaylistName = "My new playlist";
+
+		newSongTitle = "CUFF IT";
+		newSongLength = "225";
+		newSingerName = "Beyonce";
+		newAlbumTitle = "RENAISSANCE";
+		newAlbumYear = "2022";
 	}
 
 	public String showDetails(){
@@ -135,6 +149,10 @@ public class testBean {
 		return "createPlaylist";
 	}
 
+	public String addNewSongs(){
+		return "addNewSongs";
+	}
+
 	// Users
 	public List<User> getUsers(){
 		return users;
@@ -183,5 +201,101 @@ public class testBean {
 	public void updateChosenPlaylist(ValueChangeEvent event) {
 		this.chosenPlaylist = (String) event.getNewValue();
 	}
+
+	public String getNewSongTitle() {
+		return newSongTitle;
+	}
+
+	public void setNewSongTitle(String newSongTitle) {
+		this.newSongTitle = newSongTitle;
+	}
+
+	public String getNewSongLength() {
+		return newSongLength;
+	}
+
+	public void setNewSongLength(String newSongLength) {
+		this.newSongLength = newSongLength;
+	}
+
+	public String getNewSingerName() {
+		return newSingerName;
+	}
+
+	public void setNewSingerName(String newSingerName) {
+		this.newSingerName = newSingerName;
+	}
+
+	public String getNewAlbumTitle() {
+		return newAlbumTitle;
+	}
+
+	public void setNewAlbumTitle(String newAlbumTitle) {
+		this.newAlbumTitle = newAlbumTitle;
+	}
+
+	public String getNewAlbumYear() {
+		return newAlbumYear;
+	}
+
+	public void setNewAlbumYear(String newAlbumYear) {
+		this.newAlbumYear = newAlbumYear;
+	}
+
+	public void addNewSong() {
+		try {
+			Singer singer = new Singer(newSingerName);
+			Album album = new Album(newAlbumTitle, Integer.parseInt(newAlbumYear), singer);
+			Song song = new Song(newSongTitle, Integer.parseInt(newSongLength));
+			song.setSinger(singer);
+			song.setAlbum(album);
+
+			ps.addNewSong(singer, album, song);
+			// Ajoutez les objets song, album et singer à votre logique métier appropriée
+
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New song added successfully!", null));
+		} catch (NumberFormatException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid number format for year or length!", null));
+		}
+	}
+
+	public void validateSongLength(FacesContext context, UIComponent component, Object value) {
+		String lengthStr = (String) value;
+
+		try {
+			Integer length = Integer.parseInt(lengthStr);
+
+			// Vérifier si la longueur de la chanson est valide (par exemple, supérieure à zéro)
+			if (length <= 0) {
+				FacesMessage message = new FacesMessage("Invalid song length");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				throw new ValidatorException(message);
+			}
+		} catch (NumberFormatException e) {
+			FacesMessage message = new FacesMessage("Invalid song length format");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(message);
+		}
+	}
+
+	public void validateAlbumYear(FacesContext context, UIComponent component, Object value) {
+		String yearStr = (String) value;
+
+		try {
+			Integer year = Integer.parseInt(yearStr);
+
+			// Vérifier si l'année de l'album est valide (par exemple, supérieure à 1900)
+			if (year < 1900) {
+				FacesMessage message = new FacesMessage("Invalid album year");
+				message.setSeverity(FacesMessage.SEVERITY_ERROR);
+				throw new ValidatorException(message);
+			}
+		} catch (NumberFormatException e) {
+			FacesMessage message = new FacesMessage("Invalid album year format");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			throw new ValidatorException(message);
+		}
+	}
+
 
 }

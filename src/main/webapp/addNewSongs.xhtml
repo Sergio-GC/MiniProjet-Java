@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
+    <ui:define name="content">
+        <h:form>
+            <h1>Create a new playlist</h1>
+            <h:panelGrid columns="3">
+                <h:outputText value="Song title: "/>
+                <h:inputText value="#{testBean.newSongTitle}" />
+                <h:outputText value=""/>
+                <h:outputText value="Song length (in seconds): "/>
+                <h:inputText id="songLengthInput" value="#{testBean.newSongLength}" validator="#{testBean.validateSongLength}" />
+                <h:message for="songLengthInput" style="color: red" />
+                <h:outputText value="Singer name: "/>
+                <h:inputText value="#{testBean.newSingerName}" />
+                <h:outputText value=""/>
+                <h:outputText value="Album title: "/>
+                <h:inputText value="#{testBean.newAlbumTitle}" />
+                <h:outputText value=""/>
+                <h:outputText value="Album year: "/>
+                <h:inputText id="albumYearInput" value="#{testBean.newAlbumYear}" validator="#{testBean.validateAlbumYear}" />
+                <h:message for="albumYearInput" style="color: red" />
+                <h:commandButton value="Add" action="#{testBean.addNewSong}"/>
+            </h:panelGrid>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

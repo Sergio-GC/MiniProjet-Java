@@ -11,14 +11,13 @@
         <h:form>
             <h:outputLabel value="Available songs:"/>
             <br></br>
-            <h:panelGrid columns="15">
-                <h:outputText value="Add music to #{testBean.chosenPlaylist} playlist."/>
-                <ul>
-                    <ui:repeat value="#{testBean.fullSongs}" var="song">
-                        <li>#{song.getTitle()}</li><h:commandButton value="Add" action="#{testBean.addSongToPlaylist(song)}"/>
-                    </ui:repeat>
-                </ul>
-            </h:panelGrid>
+            <h:outputText value="Add music to #{testBean.chosenPlaylist} playlist."/>
+            <ui:repeat value="#{testBean.fullSongs}" var="song">
+                <h:panelGrid columns="2">
+                    <li>#{song.getTitle()}</li>
+                    <h:commandButton value="Add" action="#{testBean.addSongToPlaylist(song)}"/>
+                </h:panelGrid>
+            </ui:repeat>
         </h:form>
     </ui:define>
 </ui:composition>

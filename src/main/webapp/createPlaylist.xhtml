@@ -9,15 +9,13 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
     <ui:define name="content">
         <h:form>
-            <h1>Welcome to the future Spotify ;)</h1>
-            <h3>Please, select a user :</h3>
-            <ui:repeat value="#{testBean.users}" var="user">
-                <h:commandLink action="#{testBean.selectUser(user)}">
-                    <h:outputText value="#{user.getName()}"/>
-                </h:commandLink><br/>
-            </ui:repeat>
-            <br/><br/><br/>
-            <h:commandButton value="Or create a new user" action="#{testBean.createUser}"/>
+            <h1>Create a new playlist</h1>
+            <h:panelGrid columns="5">
+                <h:outputText value="Name: "/>
+                <h:inputText value="#{testBean.newPlaylistName}" />
+
+                <h:commandButton value="Create playlist" action="#{testBean.addPlaylist}"/>
+            </h:panelGrid>
         </h:form>
     </ui:define>
 </ui:composition>

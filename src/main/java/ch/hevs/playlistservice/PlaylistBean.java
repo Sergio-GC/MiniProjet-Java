@@ -109,6 +109,15 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	@Override
+	public void deleteSongFromPlaylist(Song song, Playlist playlist) {
+		playlist = em.merge(playlist);
+		song = em.merge(song);
+
+		em.persist(playlist);
+		playlist.deleteSong(song);
+	}
+
+	@Override
 	public Playlist createPlaylist(int userId, String playlistName, List<Song> songs) {
 		// TODO Auto-generated method stub
 		Query userQuery = em.createQuery("select u from User u where u.id=:id");
@@ -174,6 +183,23 @@ public class PlaylistBean implements PlaylistService {
 		return newUser;
 	}
 
+
+
+
+
+	@Override
+	public Playlist addPlaylist(String playlistName, User user) {
+		List<Song> songs = new ArrayList<>();
+//		Playlist newPlaylist = new Playlist();
+//		newPlaylist.setName(playlistName);
+//		newPlaylist.setOwner(em.find(User.class, user.getId()));
+//		newPlaylist.setSongs(songs);
+		Playlist newPlaylist = new Playlist(playlistName, user, songs);
+		em.merge(newPlaylist);
+
+		return newPlaylist;
+	}
+
 	@Override
 	public ArrayList<Playlist> getPlaylistsByUser(User user) {
 		em.merge(user);
@@ -194,11 +220,20 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	public Playlist getPlaylistByName(String playlistName){
-		Query q = em.createQuery("select p from Playlist p join fetch p.songs where p.name=:name");
+		Query q = em.createQuery("select p from Playlist p where p.name=:name");
 		q.setParameter("name", playlistName);
 
 		// Return the first playlist with the given name TODO make sure every playlist has a unique name
-		return (Playlist) q.getResultList().get(0);
+//		return (Playlist) q.getResultList().get(0);
+
+		List<Playlist> resultList = q.getResultList();
+		if (!resultList.isEmpty()) {
+			// Return the first playlist with the given name
+			return resultList.get(0);
+		} else {
+			// Handle the case when the playlist is not found
+			return null; // Or throw an exception, return a default value, etc.
+		}
 	}
 
 }

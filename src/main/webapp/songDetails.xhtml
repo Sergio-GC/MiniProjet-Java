@@ -9,15 +9,13 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
     <ui:define name="content">
         <h:form>
-            <h:outputLabel value="Playlist contents:"/>
+            <h:outputLabel value="#{song.title}"/>
             <br></br>
-            <h:panelGrid columns="5">
-                <h:outputText value="#{testBean.chosenPlaylist} playlist's songs:"/>
-                <ul>
-                    <ui:repeat value="#{testBean.songsFromPlaylist}" var="song">
-                        <li><h:commandLink value="#{song.getTitle()}" action="#{testBean.songDetails(song)}"/></li>
-                    </ui:repeat>
-                </ul>
+            <h:panelGrid columns="2">
+                <h:outputText value="Title:  "/><h:outputText value="     #{song.title}"/>
+                <h:outputText value="Duration (in seconds):  "/><h:outputText value="     #{song.length}"/>
+                <h:outputText value="Album:  "/><h:outputText value="     #{song.album.title}"/>
+                <h:outputText value="Artist:  "/><h:outputText value="     #{song.singer.name}"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

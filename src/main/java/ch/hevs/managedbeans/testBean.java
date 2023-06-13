@@ -15,12 +15,13 @@ import java.util.List;
 public class testBean {
 	private String chosenPlaylist;
 	private List<String> playlistNames;
-	private List<String> playlistSongs;
 	private List<Song> fullSongs;
+	private List<Song> songsFromPlaylist;
 	private PlaylistService ps;
 	private List<User> users;
 	private User chosenUser;
 	private String newUserName;
+	private Song song;
 
 	@PostConstruct
 	public void initialize() throws NamingException{
@@ -46,13 +47,7 @@ public class testBean {
 	public String showDetails(){
 		try{
 			Playlist p = ps.getPlaylistByName(chosenPlaylist);
-
-			List<Song> songs = p.getSongs();
-			playlistSongs = new ArrayList<>();
-
-			for(Song s : songs){
-				playlistSongs.add(s.getTitle() + " - " + s.getSinger().getName());
-			}
+			songsFromPlaylist = p.getSongs();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -106,6 +101,11 @@ public class testBean {
 		return "welcomeTest";
 	}
 
+	public String songDetails(Song song){
+		this.song = song;
+		return "songDetails";
+	}
+
 	public List<User> loadUsers(){
 		return ps.getUsers();
 	}
@@ -117,6 +117,14 @@ public class testBean {
 
 	public String createUser(){
 		return "createUser";
+	}
+
+	public List<Song> getSongsFromPlaylist(){
+		return songsFromPlaylist;
+	}
+
+	public Song getSong(){
+		return song;
 	}
 
 	// Users
@@ -147,11 +155,6 @@ public class testBean {
 	// PlaylistNames
 	public List<String> getPlaylistNames(){
 		return playlistNames;
-	}
-
-	// Songs
-	public List<String> getPlaylistSongs(){
-		return playlistSongs;
 	}
 
 	public void updateChosenPlaylist(ValueChangeEvent event) {

@@ -38,5 +38,12 @@
 			<to-view-id>/createUser.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/playlistDetails.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>songDetails</from-outcome>
+			<to-view-id>/songDetails.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 </faces-config>

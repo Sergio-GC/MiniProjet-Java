@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
+    <ui:define name="content">
+        <h:form>
+            <h2 style="margin-bottom: 10px">
+                <h:outputLabel value="#{testBean.getSinger().name}"/>
+            </h2>
+            <h3 style="margin-bottom: 5px">List of songs by album:</h3>
+            <ul style="margin-top: 0px">
+                <ui:repeat value="#{testBean.getSinger().albums}" var="album">
+                    <li style="list-style: none">
+                        <h4 style="margin-bottom: 5px"><h:commandLink value="#{album.title}" action="#{testBean.albumDetails(album)}"/></h4>
+                        <ol>
+                            <ui:repeat value="#{album.songs}" var="song">
+                                <li>
+                                    <h:commandLink value="#{song.title}" action="#{testBean.songDetails(song)}"/>
+                                </li>
+                            </ui:repeat>
+                        </ol>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

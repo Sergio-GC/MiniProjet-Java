@@ -15,7 +15,7 @@
                 <h:outputText value="Title:  "/><h:outputText value="     #{song.title}"/>
                 <h:outputText value="Duration (in seconds):  "/><h:outputText value="     #{song.length}"/>
                 <h:outputText value="Album:  "/><h:commandLink value="     #{song.album.title}" action="#{testBean.albumDetails(testBean.song.getAlbum())}"/>
-                <h:outputText value="Artist:  "/><h:outputText value="     #{song.singer.name}"/>
+                <h:outputText value="Artist:  "/><h:commandLink value="     #{song.singer.name}" action="#{testBean.singerDetails(testBean.song.getSinger())}"/>
             </h:panelGrid>
         </h:form>
     </ui:define>

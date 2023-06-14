@@ -15,7 +15,7 @@
             <h:panelGrid columns="2">
                 <h:outputText value="Title:  "/><h:outputText value="     #{testBean.album.title}"/>
                 <h:outputText value="Year:  "/><h:outputText value="     #{testBean.album.year}"/>
-                <h:outputText value="Artist:  "/><h:outputText value="     #{testBean.album.singer.name}"/>
+                <h:outputText value="Artist:  "/><h:commandLink value="     #{testBean.album.singer.name}" action="#{testBean.singerDetails(testBean.getAlbum().singer)}"/>
             </h:panelGrid>
             <h4 style="margin-bottom: 5px">List of songs:</h4>
             <ul style="margin-top: 0px">

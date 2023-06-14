@@ -12,7 +12,6 @@ import javax.faces.validator.ValidatorException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class testBean {
@@ -40,14 +39,7 @@ public class testBean {
 		// Use JNDI to inject reference to playlist bean
 		InitialContext ctx = new InitialContext();
 		ps = (PlaylistService) ctx.lookup("java:global/TP12-WEB-EJB-PC-EPC-E-0.0.1-SNAPSHOT/PlaylistBean!ch.hevs.playlistservice.PlaylistService");
-		ps.populate();
-
-		/*// Get playlists
-		List<Playlist> playlists = ps.getPlaylists();
-		playlistNames = new ArrayList<String>();
-		for(Playlist p : playlists) {
-			playlistNames.add(p.getName());
-		}*/
+		//ps.populate();
 
 		// Get users
 		users = loadUsers();
@@ -97,33 +89,41 @@ public class testBean {
 		return "addSongs";
 	}
 
-	public void addSongToPlaylist(Song song){
+	public String addSongToPlaylist(Song song){
 		if(chosenPlaylist != null){
 			Playlist p = ps.getPlaylistByName(chosenPlaylist);
 			ps.addSongToPlaylist(song, p);
 		}
+
+		// Reload the list of available songs and rediret the user
+		addSongs();
+		return "addSongs";
 	}
 
-	public void deleteSong(Song song) {
+	public String deleteSong(Song song) {
 		if (chosenPlaylist != null) {
 			Playlist p = ps.getPlaylistByName(chosenPlaylist);
 			ps.deleteSongFromPlaylist(song, p);
 		}
+
+		return showDetails();
 	}
 
 	public String selectUser(User user){
 		// Save the user's selection
 		chosenUser = user;
 
-		// Set the playlist to the user's playlists
+		loadPlaylistNames();
+
+		return "welcomeTest";
+	}
+
+	public void loadPlaylistNames(){
 		List<Playlist> playlists = ps.getPlaylistsByUser(chosenUser);
 
-		// Set the names in the list of playlists
 		playlistNames = new ArrayList<>();
 		for(Playlist p : playlists)
 			playlistNames.add(p.getName());
-
-		return "welcomeTest";
 	}
 
 	public String songDetails(Song song){
@@ -187,8 +187,15 @@ public class testBean {
 	}
 
 	// Create New Playlist
-	public Playlist addPlaylist() {
-		return ps.addPlaylist(newPlaylistName, chosenUser);
+	public String addPlaylist() {
+		// Create the new playlist
+		ps.addPlaylist(newPlaylistName, chosenUser);
+		// Reaload the playlists to be shown at the home page
+		loadPlaylistNames();
+
+		// Select the new playlist and return to home page
+		chosenPlaylist = newPlaylistName;
+		return "welcomeTest";
 	}
 	public String getNewPlaylistName(){
 		return newPlaylistName;

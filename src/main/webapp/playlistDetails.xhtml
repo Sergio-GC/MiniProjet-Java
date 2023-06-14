@@ -8,16 +8,14 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
     <ui:define name="content">
-        <h:form id="playlistForm">
+        <h:form id="playlistForm" prependId="false">
             <h:outputLabel value="Playlist contents:"/>
             <br></br>
             <h:outputText value="#{testBean.chosenPlaylist} playlist's songs:"/>
             <ui:repeat value="#{testBean.songsFromPlaylist}" var="song">
                 <h:panelGrid columns="2">
-                    <li><h:commandLink value="#{song.getTitle()}" action="#{testBean.songDetails(song)}"/></li>
-                    <h:commandButton value="Delete" action="#{testBean.deleteSong(song)}">
-                        <f:ajax execute="@this" render="@form" />
-                    </h:commandButton>
+                    <li style="list-style: none"><h:commandLink value="#{song.getTitle()}" action="#{testBean.songDetails(song)}"/></li>
+                    <h:commandButton value="Delete" action="#{testBean.deleteSong(song)}"/>
                 </h:panelGrid>
             </ui:repeat>
         </h:form>

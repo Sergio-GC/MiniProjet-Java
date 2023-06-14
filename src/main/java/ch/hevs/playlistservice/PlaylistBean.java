@@ -111,10 +111,10 @@ public class PlaylistBean implements PlaylistService {
 	@Override
 	public void deleteSongFromPlaylist(Song song, Playlist playlist) {
 		playlist = em.merge(playlist);
-		song = em.merge(song);
+		//song = em.merge(song);
 
-		em.persist(playlist);
 		playlist.deleteSong(song);
+		em.persist(playlist);
 	}
 
 	@Override
@@ -249,7 +249,7 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	public Playlist getPlaylistByName(String playlistName){
-		Query q = em.createQuery("select p from Playlist p where p.name=:name");
+		Query q = em.createQuery("select p from Playlist p left join fetch p.songs where p.name=:name");
 		q.setParameter("name", playlistName);
 
 		// Return the first playlist with the given name TODO make sure every playlist has a unique name

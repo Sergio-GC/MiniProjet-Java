@@ -62,6 +62,14 @@ public class Playlist {
 		songs.add(song);
 		song.getPlaylists().add(this);
 	}
+
+	public void deleteSong(Song song) {
+		if (this.songs == null){
+			songs = new ArrayList<>();
+		}
+		songs.remove(song);
+		song.getPlaylists().remove(this);
+	}
 	
 	// TODO change this because it's useless
 	public List<User> getUsers(){

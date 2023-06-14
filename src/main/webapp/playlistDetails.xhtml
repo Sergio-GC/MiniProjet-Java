@@ -8,17 +8,16 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml" >
     <ui:define name="content">
-        <h:form>
+        <h:form id="playlistForm" prependId="false">
             <h:outputLabel value="Playlist contents:"/>
             <br></br>
-            <h:panelGrid columns="5">
-                <h:outputText value="#{testBean.chosenPlaylist} playlist's songs:"/>
-                <ul>
-                    <ui:repeat value="#{testBean.playlistSongs}" var="song">
-                        <li>#{song}</li>
-                    </ui:repeat>
-                </ul>
-            </h:panelGrid>
+            <h:outputText value="#{testBean.chosenPlaylist} playlist's songs:"/>
+            <ui:repeat value="#{testBean.songsFromPlaylist}" var="song">
+                <h:panelGrid columns="2">
+                    <li style="list-style: none"><h:commandLink value="#{song.getTitle()}" action="#{testBean.songDetails(song)}"/></li>
+                    <h:commandButton value="Delete" action="#{testBean.deleteSong(song)}"/>
+                </h:panelGrid>
+            </ui:repeat>
         </h:form>
     </ui:define>
 </ui:composition>

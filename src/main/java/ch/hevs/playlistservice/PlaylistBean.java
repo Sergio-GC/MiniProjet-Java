@@ -109,6 +109,15 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	@Override
+	public void deleteSongFromPlaylist(Song song, Playlist playlist) {
+		playlist = em.merge(playlist);
+		//song = em.merge(song);
+
+		playlist.deleteSong(song);
+		em.persist(playlist);
+	}
+
+	@Override
 	public Playlist createPlaylist(int userId, String playlistName, List<Song> songs) {
 		// TODO Auto-generated method stub
 		Query userQuery = em.createQuery("select u from User u where u.id=:id");
@@ -175,6 +184,52 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	@Override
+	public Playlist addPlaylist(String playlistName, User user) {
+		List<Song> songs = new ArrayList<>();
+
+		Playlist newPlaylist = new Playlist(playlistName, user, songs);
+		em.merge(newPlaylist);
+
+		return newPlaylist;
+	}
+
+	@Override
+	public void addNewSong(Singer singer, Album album, Song song) {
+		// Rechercher le chanteur dans la base de données en fonction du nom
+		Query singerQuery = em.createQuery("SELECT s FROM Singer s WHERE s.name = :name");
+		singerQuery.setParameter("name", singer.getName());
+		List<Singer> existingSingers = singerQuery.getResultList();
+
+		if (!existingSingers.isEmpty()) {
+			// Chanteur trouvé, associer à la chanson
+			Singer existingSinger = existingSingers.get(0);
+			song.setSinger(existingSinger);
+		} else {
+			// Chanteur non trouvé, le persister
+			em.persist(singer);
+			song.setSinger(singer);
+		}
+
+		// Rechercher l'album dans la base de données en fonction du titre
+		Query albumQuery = em.createQuery("SELECT a FROM Album a WHERE a.title = :title");
+		albumQuery.setParameter("title", album.getTitle());
+		List<Album> existingAlbums = albumQuery.getResultList();
+
+		if (!existingAlbums.isEmpty()) {
+			// Album trouvé, associer à la chanson
+			Album existingAlbum = existingAlbums.get(0);
+			song.setAlbum(existingAlbum);
+		} else {
+			// Album non trouvé, le persister
+			em.persist(album);
+			song.setAlbum(album);
+		}
+
+		// Persister la chanson
+		em.persist(song);
+	}
+
+	@Override
 	public ArrayList<Playlist> getPlaylistsByUser(User user) {
 		em.merge(user);
 
@@ -194,11 +249,20 @@ public class PlaylistBean implements PlaylistService {
 	}
 
 	public Playlist getPlaylistByName(String playlistName){
-		Query q = em.createQuery("select p from Playlist p join fetch p.songs where p.name=:name");
+		Query q = em.createQuery("select p from Playlist p left join fetch p.songs where p.name=:name");
 		q.setParameter("name", playlistName);
 
 		// Return the first playlist with the given name TODO make sure every playlist has a unique name
-		return (Playlist) q.getResultList().get(0);
+//		return (Playlist) q.getResultList().get(0);
+
+		List<Playlist> resultList = q.getResultList();
+		if (!resultList.isEmpty()) {
+			// Return the first playlist with the given name
+			return resultList.get(0);
+		} else {
+			// Handle the case when the playlist is not found
+			return null; // Or throw an exception, return a default value, etc.
+		}
 	}
 
 }

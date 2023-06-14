@@ -10,15 +10,15 @@
     <ui:define name="content">
         <h:form>
             <h1>Welcome to the future Spotify ;)</h1>
-            <h:panelGrid columns="5">
-                <h3>Please, select a user</h3><br></br><br></br>
-                <ui:repeat value="#{testBean.users}" var="user">
-                    <h:commandLink action="#{testBean.selectUser(user)}">
-                        <h:outputText value="#{user.getName()}"/>
-                    </h:commandLink><br/>
-                </ui:repeat>
-                <h:commandButton value="Or create a new user" action="#{testBean.createUser}"/>
-            </h:panelGrid>
+            <h3>Please, select a user :</h3>
+            <ui:repeat value="#{testBean.users}" var="user">
+                <h:commandLink action="#{testBean.selectUser(user)}">
+                    <h:outputText value="#{user.getName()}"/>
+                </h:commandLink><br/>
+            </ui:repeat>
+            <br/>
+            <h:commandButton value="Or create a new user" action="#{testBean.createUser}"/>
+            <h:commandButton value="Add new Songs" action="#{testBean.addNewSongs}"/>
         </h:form>
     </ui:define>
 </ui:composition>

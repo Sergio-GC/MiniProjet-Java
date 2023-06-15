@@ -3,7 +3,6 @@ package ch.hevs.playlistservice;
 import ch.hevs.businessobject.*;
 
 import javax.ejb.Local;
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.List;
 

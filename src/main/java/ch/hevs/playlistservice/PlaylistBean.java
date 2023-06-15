@@ -209,9 +209,6 @@ public class PlaylistBean implements PlaylistService {
 		Query q = em.createQuery("select p from Playlist p left join fetch p.songs where p.name=:name");
 		q.setParameter("name", playlistName);
 
-		// Return the first playlist with the given name TODO make sure every playlist has a unique name
-//		return (Playlist) q.getResultList().get(0);
-
 		List<Playlist> resultList = q.getResultList();
 		if (!resultList.isEmpty()) {
 			// Return the first playlist with the given name

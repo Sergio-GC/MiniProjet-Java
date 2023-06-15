@@ -5,10 +5,8 @@ import ch.hevs.playlistservice.PlaylistService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.validator.ValidatorException;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.ArrayList;

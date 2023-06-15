@@ -10,22 +10,17 @@
     <ui:define name="content">
         <h:form>
             <h1>Add new song</h1>
-            <h:panelGrid columns="3">
+            <h:panelGrid columns="2">
                 <h:outputText value="Song title: "/>
                 <h:inputText value="#{testBean.newSongTitle}" />
-                <h:outputText value=""/>
                 <h:outputText value="Song length (in seconds): "/>
-                <h:inputText id="songLengthInput" value="#{testBean.newSongLength}" validator="#{testBean.validateSongLength}" />
-                <h:message for="songLengthInput" style="color: red" />
+                <h:inputText id="songLengthInput" value="#{testBean.newSongLength}"  />
                 <h:outputText value="Singer name: "/>
                 <h:inputText value="#{testBean.newSingerName}" />
-                <h:outputText value=""/>
                 <h:outputText value="Album title: "/>
                 <h:inputText value="#{testBean.newAlbumTitle}" />
-                <h:outputText value=""/>
                 <h:outputText value="Album year: "/>
-                <h:inputText id="albumYearInput" value="#{testBean.newAlbumYear}" validator="#{testBean.validateAlbumYear}" />
-                <h:message for="albumYearInput" style="color: red" />
+                <h:inputText id="albumYearInput" value="#{testBean.newAlbumYear}"  />
                 <h:commandButton value="Add" action="#{testBean.addNewSong}"/>
             </h:panelGrid>
         </h:form>

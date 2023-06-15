@@ -275,51 +275,11 @@ public class testBean {
 			song.setAlbum(album);
 
 			ps.addNewSong(singer, album, song);
-			// Ajoutez les objets song, album et singer à votre logique métier appropriée
 
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New song added successfully!", null));
 		} catch (NumberFormatException e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid number format for year or length!", null));
 		}
 	}
-
-	public void validateSongLength(FacesContext context, UIComponent component, Object value) {
-		String lengthStr = (String) value;
-
-		try {
-			Integer length = Integer.parseInt(lengthStr);
-
-			// Vérifier si la longueur de la chanson est valide (par exemple, supérieure à zéro)
-			if (length <= 0) {
-				FacesMessage message = new FacesMessage("Invalid song length");
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				throw new ValidatorException(message);
-			}
-		} catch (NumberFormatException e) {
-			FacesMessage message = new FacesMessage("Invalid song length format");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(message);
-		}
-	}
-
-	public void validateAlbumYear(FacesContext context, UIComponent component, Object value) {
-		String yearStr = (String) value;
-
-		try {
-			Integer year = Integer.parseInt(yearStr);
-
-			// Vérifier si l'année de l'album est valide (par exemple, supérieure à 1900)
-			if (year < 1900) {
-				FacesMessage message = new FacesMessage("Invalid album year");
-				message.setSeverity(FacesMessage.SEVERITY_ERROR);
-				throw new ValidatorException(message);
-			}
-		} catch (NumberFormatException e) {
-			FacesMessage message = new FacesMessage("Invalid album year format");
-			message.setSeverity(FacesMessage.SEVERITY_ERROR);
-			throw new ValidatorException(message);
-		}
-	}
-
 
 }

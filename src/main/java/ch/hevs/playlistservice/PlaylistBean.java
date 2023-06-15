@@ -125,17 +125,6 @@ public class PlaylistBean implements PlaylistService {
 		User user = (User) userQuery.getSingleResult();
 		em.persist(user);
 
-//		List<Playlist> userPlaylists = user.getPlaylists();
-//		Playlist playlist = new Playlist(playlistName, user, songs); // TODO finish
-//		em.persist(playlist);
-
-		// Add songs to the new playlist
-//		for(Song song : songs) {
-//			playlist.addSong(song);
-//		}
-//
-//		userPlaylists.add(playlist);
-//		user.setPlaylists(userPlaylists);
 		return new Playlist();
 	}
 
@@ -149,31 +138,6 @@ public class PlaylistBean implements PlaylistService {
 			// TODO throw an exception
 		}
 		em.persist(user);
-
-		// Get the user's playlists
-//		List<Playlist> playlists = user.getPlaylists();
-//
-//		if(playlists.contains(playlist)) {
-//			// Remove playlist from users with rights
-//			List<User> users = playlist.getUsers();
-//			for(User u : users) {
-//				Query q = em.createQuery("select u from User u where u.id=:id");
-//				q.setParameter("id", u.getId());
-//				User usr = (User) q.getSingleResult();
-//				em.persist(usr);
-//
-//				// Remove and update list of playlists
-//				List<Playlist> ps = u.getPlaylists();
-//				ps.remove(playlist);
-//				u.setPlaylists(ps);
-//			}
-//
-//			// Remove playlist from owner's list and update the list
-//			playlists.remove(playlist);
-//			user.setPlaylists(playlists);
-//		} else {
-//			//TODO throw an exception
-//		}
 	}
 
 	public User addUser(String username){
@@ -195,37 +159,30 @@ public class PlaylistBean implements PlaylistService {
 
 	@Override
 	public void addNewSong(Singer singer, Album album, Song song) {
-		// Rechercher le chanteur dans la base de données en fonction du nom
 		Query singerQuery = em.createQuery("SELECT s FROM Singer s WHERE s.name = :name");
 		singerQuery.setParameter("name", singer.getName());
 		List<Singer> existingSingers = singerQuery.getResultList();
 
 		if (!existingSingers.isEmpty()) {
-			// Chanteur trouvé, associer à la chanson
 			Singer existingSinger = existingSingers.get(0);
 			song.setSinger(existingSinger);
 		} else {
-			// Chanteur non trouvé, le persister
 			em.persist(singer);
 			song.setSinger(singer);
 		}
 
-		// Rechercher l'album dans la base de données en fonction du titre
 		Query albumQuery = em.createQuery("SELECT a FROM Album a WHERE a.title = :title");
 		albumQuery.setParameter("title", album.getTitle());
 		List<Album> existingAlbums = albumQuery.getResultList();
 
 		if (!existingAlbums.isEmpty()) {
-			// Album trouvé, associer à la chanson
 			Album existingAlbum = existingAlbums.get(0);
 			song.setAlbum(existingAlbum);
 		} else {
-			// Album non trouvé, le persister
 			em.persist(album);
 			song.setAlbum(album);
 		}
 
-		// Persister la chanson
 		em.persist(song);
 	}
 
